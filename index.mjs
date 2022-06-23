@@ -34,6 +34,7 @@ const stdlib = loadStdlib(process.env);
     seeOutcome: (outcome) => {
       console.log(`${person} saw outcome - ${OUTCOME[outcome]}`);
     },
+    informTimeout: () => console.log(`${person} observed TimeOut`),
   });
 
   await Promise.all([
@@ -41,13 +42,21 @@ const stdlib = loadStdlib(process.env);
       //implement Alice's intract Object here
       ...Player("Alice"),
       wager: stdlib.parseCurrency(10),
+      deadline: 10,
     }),
 
     backend.Bob(ctcBob, {
       //implement Bob's intract Object here
       ...Player("Bob"),
-      acceptWager: (amount) =>
-        console.log(`Bob accepted the wager of ${formatBalance(amount)}`),
+      acceptWager: async (amount) => {
+        if (Math.random() <= 0.5) {
+          for (let i = 0; i < 10; i++) {
+            console.log(`Bob takes his sweet time...`);
+            await stdlib.wait(1);
+          }
+        } else
+          console.log(`Bob accepted the wager of ${formatBalance(amount)}`);
+      },
     }),
   ]).catch((err) => console.log(err));
 
