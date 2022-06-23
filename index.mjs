@@ -6,7 +6,7 @@ const stdlib = loadStdlib(process.env);
 //FRONTEND
 
 (async () => {
-  const startingBalance = stdlib.parseCurrency(10);
+  const startingBalance = stdlib.parseCurrency(100);
 
   const accAlice = await stdlib.newTestAccount(startingBalance);
   const accBob = await stdlib.newTestAccount(startingBalance);
@@ -25,6 +25,7 @@ const stdlib = loadStdlib(process.env);
   const OUTCOME = ["Bob wins", "Draw", "Alice wins"];
 
   const Player = (person) => ({
+    ...stdlib.hasRandom,
     getHand: () => {
       const hand = Math.floor(Math.random() * 3);
       console.log(`${person} played ${HAND[hand]}`);
@@ -39,7 +40,7 @@ const stdlib = loadStdlib(process.env);
     backend.Alice(ctcAlice, {
       //implement Alice's intract Object here
       ...Player("Alice"),
-      wager: stdlib.parseCurrency(5),
+      wager: stdlib.parseCurrency(10),
     }),
 
     backend.Bob(ctcBob, {
