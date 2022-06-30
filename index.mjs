@@ -49,9 +49,9 @@ const stdlib = loadStdlib(process.env);
       //implement Bob's intract Object here
       ...Player("Bob"),
       acceptWager: async (amount) => {
-        if (Math.random() <= 0.5) {
-          for (let i = 0; i < 10; i++) {
-            console.log(`Bob takes his sweet time...`);
+        if (Math.random() <= 5) {
+          for (let i = 1; i < 10; i++) {
+            console.log(`Bob is taking time...`);
             await stdlib.wait(1);
           }
         } else
